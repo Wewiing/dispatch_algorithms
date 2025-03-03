@@ -20,7 +20,6 @@ const ChartsPage = ({ algorithm }) => {
     };
 
     const result = getAlgorithmResult();
-    console.log(result);
 
     return (
         <div className="gantt-chart">

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useProcessContext from "../hooks/useProcessContext";
 
+import "./ProcessForm.css"
+
 const ProcessForm = () => {
     const [name, setName] = useState("");
     const [arrivalTime, setArrivalTime] = useState("");
@@ -52,8 +54,8 @@ const ProcessForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={styles.form}>
-            <h2>Agregar Proceso</h2>
+        <form className="Form" onSubmit={handleSubmit}>
+            <h3>Agregar Proceso</h3>
             <input
                 type="text"
                 placeholder="Nombre del proceso"
@@ -87,16 +89,6 @@ const ProcessForm = () => {
     );
 };
 
-// Estilos básicos en JS
-const styles = {
-    form: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "10px",
-        maxWidth: "300px",
-        margin: "20px auto",
-    }
-};
 
 const showAlert = (message) => {
     alert(message);

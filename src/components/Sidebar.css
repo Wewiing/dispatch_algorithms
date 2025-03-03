@@ -7,25 +7,31 @@
     border-bottom-right-radius: 10px; /* Redondea la esquina inferior derecha */
 }
 
-.sidebar .active {
-    color: #292F36; /* Cambia este color al que prefieras */
-    padding: 10px;
-    background-color: #AAFAC8;
-    border-radius: 5px;
-    font-weight: 500;
-}
 
 .sidebar ul {
     display: flex;
     flex-direction: column;
     gap: 10px; /* Espaciado entre elementos */ 
+    list-style: none;
+    padding: 0;
 }
 
 .sidebar ul li {
     margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+.sidebar  li .active {
+    color: #292F36; /* Cambia este color al que prefieras */
+    padding: 10px;
+    background-color: #AAFAC8;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: all 0.3s ease-out;
 }
 
 .sidebar a {
     color: white;
     text-decoration: none;
+    padding: 10px;
 }
