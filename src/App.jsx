@@ -36,7 +36,7 @@ const MainContent = ({ selectedAlgorithm, setSelectedAlgorithm }) => {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.2 }}
-                    style={{ backgroundColor: '#202124' }} // Asegúrate de que el color de fondo coincida con el de tu aplicación
+                    style={{ height: '100%' }}// Asegúrate de que el color de fondo coincida con el de tu aplicación
                 >
                     <Routes location={location} key={location.pathname}>
                         <Route path="/" element={<Navigate to="/form" replace />} />
