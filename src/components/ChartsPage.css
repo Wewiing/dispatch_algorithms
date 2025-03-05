@@ -1,0 +1,97 @@
+.simulation{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #131416;
+}
+
+.gantt-chart{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.gantt-chart .no-data{
+    margin: 0;
+    color: #C4C8BC;
+    align-self: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.graphic {
+    margin-top: 10px;
+}
+
+.gantt-chart .results{
+    color: #C4C8BC;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+
+.gantt-chart .results .tables{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.gantt-chart .results .tables table{
+    width: 28s0px;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background-color: #202124;
+    color: #C4C8BC;
+    border: 2px solid #D56108;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gantt-chart .results .tables th{
+    background-color: #D56108;
+    color: #202124;
+    padding: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.gantt-chart .results .tables td {
+    padding: 10px;
+    border-bottom: 1px solid #C4C8BC;
+    text-align: center ;
+}
+
+.gantt-chart .results .tables tr:hover {
+    background-color: rgba(213, 97, 8, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.gantt-chart .graphic ResponsiveContainer{
+    width: 100%;
+    height: 100%;
+}
+
+.average-times {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.average-times div {
+    background-color: #D56108;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color:#202124;
+    padding: 10px;
+    border-radius: 10px;
+}

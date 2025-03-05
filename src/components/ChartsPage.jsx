@@ -2,6 +2,7 @@ import React from "react";
 import useProcessContext from "../hooks/useProcessContext";
 import { fifo, sjf, priorityScheduling } from "../utils/algorithms";
 import GanttChart from "./GanttChart";
+import "./ChartsPage.css";
 
 const ChartsPage = ({ algorithm }) => {
     const { processes } = useProcessContext();
@@ -23,55 +24,37 @@ const ChartsPage = ({ algorithm }) => {
 
     return (
         <div className="gantt-chart">
-            <h2>Algoritmo Seleccionado: {algorithm.toUpperCase()}</h2>
             <GanttChart result={result} />
-            {result && (
-                <div>
-                    <h3>Resultado:</h3>
-                    <table >
-                        <thead>
-                            <tr>
-                            <th>Proceso</th>
-                            <th>Tiempo de Espera</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {result.ganttChart.map((process, index) => (
-                            <tr key={process.name} >
-                                <td>{process.name}</td>
-                                <td>
-                                {result.waitingTimes[index]}
-                                </td>
-                            </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                {/* 
-                                <th>Tiempo de Fin</th>
-                                <th>Tiempo de Llegada</th>
-                                */}
-                                <th>Tiempo de Sistema</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {result.ganttChart.map((process, index) => (
-                                <tr key={index}>
-                                    <td>{process.name}</td>
-                                    {/* 
-                                    <td>{process.end}</td>
-                                    <td>{process.arrivalTime}</td>
-                                    */}
-                                    <td>{process.end - process.arrivalTime}</td>
+            {result && result.ganttChart && result.ganttChart.length > 0 && (
+                <div className="results">
+                    <div className="tables">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Proceso</th>
+                                    <th>Tiempo de Espera</th>
+                                    <th>Tiempo de Sistema</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-
+                            </thead>
+                            <tbody>
+                                {result.ganttChart.map((process, index) => (
+                                    <tr key={process.name}>
+                                        <td>{process.name}</td>
+                                        <td>{result.waitingTimes[index]}</td>
+                                        <td>{process.end - process.arrivalTime}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        <div className="average-times">
+                            <div>Tiempo de Espera Promedio: {result.avgWaitingTime.toFixed(2)}</div>
+                            <div>
+                                Tiempo de Sistema Promedio: {
+                                    (result.ganttChart.reduce((acc, process) => acc + (process.end - process.arrivalTime), 0) / result.ganttChart.length).toFixed(2)
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

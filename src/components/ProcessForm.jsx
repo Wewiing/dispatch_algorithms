@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import useProcessContext from "../hooks/useProcessContext";
 
 import "./ProcessForm.css"
@@ -9,6 +9,27 @@ const ProcessForm = () => {
     const [burstTime, setBurstTime] = useState("");
     const [priority, setPriority] = useState("");
     const { processes, handleAddProcess } = useProcessContext();
+
+        // Crea refs para cada input
+        const nameRef = useRef(null);
+        const burstTimeRef = useRef(null);
+        const arrivalTimeRef = useRef(null);
+        const priorityRef = useRef(null);
+        
+        const inputsRefs = [nameRef, burstTimeRef, arrivalTimeRef, priorityRef];
+
+        const handleKeyDown = (e, index) => {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const nextIndex = Math.min(index + 1, inputsRefs.length - 1);
+                inputsRefs[nextIndex].current.focus();
+            }
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const prevIndex = Math.max(index - 1, 0);
+                inputsRefs[prevIndex].current.focus();
+            }
+        };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,41 +75,57 @@ const ProcessForm = () => {
     };
 
     return (
-        <form className="Form" onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
             <h3>Agregar Proceso</h3>
+            <label htmlFor="name">Nombre del proceso:</label>
             <input
                 type="text"
-                placeholder="Nombre del proceso"
+                id="name"
                 value={name}
+                ref={nameRef}
+                autoComplete="off"
+                onKeyDown={(e) => handleKeyDown(e, 0)}
                 onChange={(e) => setName(e.target.value)}
+                placeholder="Ej. Proceso 1"
                 required
             />
+            <label htmlFor="burstTime">Tiempo de ráfaga:</label>
             <input
                 type="number"
-                placeholder="Tiempo de ráfaga"
+                id="burstTime"
                 value={burstTime}
+                ref={burstTimeRef}
+                onKeyDown={(e) => handleKeyDown(e, 1)}
                 onChange={(e) => setBurstTime(e.target.value)}
+                placeholder="Ej. 10"
                 required
             />
+            <label htmlFor="arrivalTime">Tiempo de llegada:</label>
             <input
                 type="number"
-                placeholder="Tiempo de llegada"
+                id="arrivalTime"
                 value={arrivalTime}
+                ref={arrivalTimeRef}
+                onKeyDown={(e) => handleKeyDown(e, 2)}
                 onChange={(e) => setArrivalTime(e.target.value)}
+                placeholder="Ej. 5"
                 required
             />
+            <label htmlFor="priority">Prioridad:</label>
             <input
                 type="number"
-                placeholder="Prioridad"
+                id="priority"
                 value={priority}
+                ref={priorityRef}
+                onKeyDown={(e) => handleKeyDown(e, 3)}
                 onChange={(e) => setPriority(e.target.value)}
+                placeholder="Ej. 1"
                 required
             />
             <button type="submit">Agregar</button>
         </form>
     );
 };
-
 
 const showAlert = (message) => {
     alert(message);

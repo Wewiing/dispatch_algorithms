@@ -1,7 +1,24 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { useState } from 'react';
 
 const GanttChart = ({ result }) => {
-    if (!result || !result.ganttChart || result.ganttChart.length === 0) return <p>No hay datos para mostrar.</p>;
+
+    const [opacity, setOpacity] = useState({
+        waitingEnd: 1,
+        durationEnd: 1
+    });
+
+    const handleMouseEnter = (o) => {
+        const { dataKey } = o;
+        setOpacity(prev => ({ ...prev, [dataKey]: 0.5 }));
+    };
+
+    const handleMouseLeave = (o) => {
+        const { dataKey } = o;
+        setOpacity(prev => ({ ...prev, [dataKey]: 1 }));
+    };
+
+    if (!result || !result.ganttChart || result.ganttChart.length === 0) return <p className="no-data">No hay datos para mostrar.</p>;
 
     // Transformamos los datos
     const data = result.ganttChart.map((process) => ({
@@ -45,8 +62,8 @@ const GanttChart = ({ result }) => {
     const ticks = Array.from({ length: maxTime + 1 }, (_, i) => i);
 
     return (
-        <div style={{ width: "100%", height: 300 }}>
-            <ResponsiveContainer width="100%" height="100%">
+        <div className="graphic" style={{ width: "100%", height: 300 }}>
+            <ResponsiveContainer>
                 <BarChart
                     layout="vertical"
                     data={data}
@@ -59,12 +76,23 @@ const GanttChart = ({ result }) => {
                         label={{ value: "Tiempo", position: "insideBottom", offset: -5 }} 
                         ticks={ticks} // Agregar ticks personalizados
                     />
-                    <YAxis dataKey="name" type="category" width={80} />
+                    <YAxis 
+                        dataKey="name" 
+                        type="category" 
+                        width={80} 
+                        label={{ value: "Procesos", angle: -90, position: 'insideLeft', dy: 50 }} // Agregar label al eje Y
+                    />
                     
                     {/* Tooltip personalizado */}
                     <Tooltip 
                         cursor={{ fill: 'rgba(0,0,0,0.1)' }}
                         content={<CustomTooltip />}
+                    />
+
+                    <Legend 
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        wrapperStyle={{ paddingTop: '20px' }}
                     />
                     
                     {/* Barras apiladas */}
@@ -77,13 +105,15 @@ const GanttChart = ({ result }) => {
                     <Bar 
                         dataKey="waitingEnd" 
                         stackId="a" 
-                        fill="#919191" 
+                        fill="#919191"
+                        fillOpacity={opacity.durationEnd} 
                         name="Tiempo de espera"
                     />
                     <Bar 
                         dataKey="durationEnd" 
                         stackId="a" 
-                        fill="#e73b3b"
+                        fill="#177E89"
+                        fillOpacity={opacity.waitingEnd}
                         name="Tiempo de ejecución"
                     />
                 </BarChart>
